@@ -14,7 +14,7 @@
         </p>
         <div class="hero-actions">
             <a href="/register" class="btn-dark">Create free account</a>
-            <a href="/login" class="btn-dark">See how it works</a>
+            <a href="/login" class="btn-dark" data-open-modal="video-modal">See how it works</a>
         </div>
     </div>
     <div class="hero-visual">
@@ -97,6 +97,71 @@
         <a href="/register" class="btn-primary">Create free account</a>
     </div>
 </section>
+
+<div class="modal" id="video-modal" hidden>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="See how it works">
+        <button type="button" class="modal-close" data-close-modal aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-body">
+            <iframe class="modal-video"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Spendly — See how it works"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var modal = document.getElementById('video-modal');
+    if (!modal) return;
+
+    var openers = Array.prototype.slice.call(document.querySelectorAll('[data-open-modal="video-modal"]'));
+    var closers = Array.prototype.slice.call(modal.querySelectorAll('[data-close-modal]'));
+
+    function openModal() {
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        // Stop the embedded YouTube video from playing in the background
+        var iframe = modal.querySelector('iframe');
+        if (iframe) {
+            iframe.src = '';
+        }
+    }
+
+    openers.forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+            event.preventDefault();
+            openModal();
+        });
+    });
+
+    closers.forEach(function (btn) {
+        btn.addEventListener('click', closeModal);
+    });
+
+    // Clicking the overlay (outside the dialog) closes the modal
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Pressing Escape closes the modal
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !modal.hidden) {
+            closeModal();
+        }
+    });
+})();
+</script>
 `;
 -%>
 <%- include('layouts/base', { title: 'Spendly — Track Every Rupee', body }) %>
