@@ -22,6 +22,7 @@ app.get('/register', (req, res) => res.render('auth/register'));
 app.get('/login', (req, res) => res.render('auth/login'));
 app.get('/logout', (req, res) => { req.session.destroy(); res.redirect('/'); });
 app.get('/profile', (req, res) => res.send('Profile page — coming in Step 4'));
+app.get('/terms', (req, res) => res.render('policy/terms'));
 app.get('/expenses/add', (req, res) => res.send('Add expense — coming in Step 7'));
 app.get('/expenses/:id/edit', (req, res) => res.send('Edit expense — coming in Step 8'));
 app.get('/expenses/:id/delete', (req, res) => res.send('Delete expense — coming in Step 9'));
