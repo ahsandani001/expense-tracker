@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Local SQLite data (local dev state — not portable)
+*.db
+*.db-shm
+*.db-wal
+
+# Environment / secrets
+.env
+.env.*
+
+# Editor / OS cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local tooling artifacts
+.playwright-mcp/
+logs/
+*.log
+hi-claude-i-have-nested-lake.md
+
+# Python build artifacts (keep python/.gitignore in sync)
+build/
+dist/
+.eggs/
+.pytest_cache/
+.coverage
+htmlcov/
+python/
