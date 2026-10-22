@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const { initDb, seedDb } = require('./db/init');
 
 const app = express();
 
@@ -27,6 +28,9 @@ app.get('/privacy', (req, res) => res.render('policy/privacy'));
 app.get('/expenses/add', (req, res) => res.send('Add expense — coming in Step 7'));
 app.get('/expenses/:id/edit', (req, res) => res.send('Edit expense — coming in Step 8'));
 app.get('/expenses/:id/delete', (req, res) => res.send('Delete expense — coming in Step 9'));
+
+initDb();
+seedDb();
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
