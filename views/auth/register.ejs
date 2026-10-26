@@ -1,44 +1,41 @@
-<% const errorHtml = (typeof error !== 'undefined' && error) ? '<div class="auth-error">' + error + '</div>' : ''; %>
+<% const h = (v) => (v == null ? '' : String(v)).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); %>
+<% const errorHtml = (errors && errors.length)
+    ? '<div class="auth-error"><ul>' + errors.map((e) => '<li>' + h(e) + '</li>').join('') + '</ul></div>'
+    : ''; %>
 <% const body = `
 <section class="auth-section">
     <div class="auth-container">
-
         <div class="auth-header">
             <h1 class="auth-title">Create your account</h1>
             <p class="auth-subtitle">Start tracking your expenses today</p>
         </div>
-
         <div class="auth-card">
             ${errorHtml}
-
             <form method="POST" action="/register">
                 <div class="form-group">
                     <label for="name">Full name</label>
-                    <input type="text" id="name" name="name"
-                           class="form-input" placeholder="Nitish Kumar"
-                           required autofocus>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Nitish Kumar" required autofocus value="${h(name)}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" id="email" name="email"
-                           class="form-input" placeholder="nitish@example.com"
-                           required>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="nitish@example.com" required value="${h(email)}">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password"
-                           class="form-input"
-                           placeholder="Min. 8 characters" required>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Min. 8 characters" required>
+                    <p class="form-hint">Minimum 8 characters</p>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-input" placeholder="Confirm password" required>
                 </div>
                 <button type="submit" class="btn-submit">Create account</button>
             </form>
         </div>
-
         <p class="auth-switch">
             Already have an account?
             <a href="/login">Sign in</a>
         </p>
-
     </div>
 </section>
 `;

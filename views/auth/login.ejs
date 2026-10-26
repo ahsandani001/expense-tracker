@@ -1,38 +1,35 @@
-<% const errorHtml = (typeof error !== 'undefined' && error) ? '<div class="auth-error">' + error + '</div>' : ''; %>
+<% const h = (v) => (v == null ? '' : String(v)).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); %>
+<% const errorList = (typeof errors !== 'undefined' && Array.isArray(errors)) ? errors : []; %>
+<% const errorHtml = (errorList.length)
+    ? '<div class="auth-error"><ul>' + errorList.map((e) => '<li>' + h(e) + '</li>').join('') + '</ul></div>'
+    : ''; %>
+<% const successHtml = registered ? '<div class="auth-success">Account created. Please sign in.</div>' : ''; %>
 <% const body = `
 <section class="auth-section">
     <div class="auth-container">
-
         <div class="auth-header">
             <h1 class="auth-title">Welcome back</h1>
             <p class="auth-subtitle">Sign in to your Spendly account</p>
         </div>
-
         <div class="auth-card">
             ${errorHtml}
-
+            ${successHtml}
             <form method="POST" action="/login">
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" id="email" name="email"
-                           class="form-input" placeholder="nitish@example.com"
-                           required autofocus>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="nitish@example.com" required autofocus value="${h(email)}">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password"
-                           class="form-input" placeholder="Your password"
-                           required>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Your password" required>
                 </div>
                 <button type="submit" class="btn-submit">Sign in</button>
             </form>
         </div>
-
         <p class="auth-switch">
             Don't have an account?
             <a href="/register">Create one free</a>
         </p>
-
     </div>
 </section>
 `;

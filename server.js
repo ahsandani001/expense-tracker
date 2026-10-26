@@ -3,10 +3,11 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const { initDb, seedDb } = require('./db/init');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -18,9 +19,8 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
+app.use('/', authRouter);
 app.get('/', (req, res) => res.render('landing'));
-app.get('/register', (req, res) => res.render('auth/register'));
-app.get('/login', (req, res) => res.render('auth/login'));
 app.get('/logout', (req, res) => { req.session.destroy(); res.redirect('/'); });
 app.get('/profile', (req, res) => res.send('Profile page — coming in Step 4'));
 app.get('/terms', (req, res) => res.render('policy/terms'));
