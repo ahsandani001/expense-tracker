@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { createUser } = require('../db/users');
+const { createUser, findUserByEmail } = require('../db/users');
 
 const BCRYPT_COST = 12;
 const NAME_MAX = 100;
@@ -66,4 +66,59 @@ const postRegister = async (req, res) => {
   }
 };
 
-module.exports = { getRegister, getLogin, postRegister };
+const postLogin = async (req, res) => {
+  const email = String(req.body.email || '').trim().toLowerCase();
+  const password = String(req.body.password || '');
+
+  const errors = [];
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email.length === 0 || email.length > EMAIL_MAX || !emailRegex.test(email)) {
+    errors.push('A valid email address is required (max 254 characters).');
+  }
+
+  if (Buffer.byteLength(password, 'utf8') === 0) {
+    errors.push('Password is required.');
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).render('auth/login', { errors, email, registered: false });
+  }
+
+  try {
+    const user = findUserByEmail(email);
+    if (!user) {
+      return res.status(401).render('auth/login', {
+        errors: ['Invalid email or password.'],
+        email,
+        registered: false
+      });
+    }
+
+    const passwordValid = await bcrypt.compare(password, user.password_hash);
+
+    if (!passwordValid) {
+      return res.status(401).render('auth/login', {
+        errors: ['Invalid email or password.'],
+        email,
+        registered: false
+      });
+    }
+
+    req.session.userId = user.id;
+    return res.redirect('/');
+  } catch (err) {
+    return res.status(500).render('auth/login', {
+      errors: ['Something went wrong. Please try again.'],
+      email,
+      registered: false
+    });
+  }
+};
+
+const getLogout = (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+};
+
+module.exports = { getRegister, getLogin, postRegister, postLogin, getLogout };
