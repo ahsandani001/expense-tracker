@@ -21,7 +21,6 @@ app.use(session({
 
 app.use('/', authRouter);
 app.get('/', (req, res) => res.render('landing'));
-app.get('/logout', (req, res) => { req.session.destroy(); res.redirect('/'); });
 app.get('/profile', (req, res) => res.send('Profile page — coming in Step 4'));
 app.get('/terms', (req, res) => res.render('policy/terms'));
 app.get('/privacy', (req, res) => res.render('policy/privacy'));
