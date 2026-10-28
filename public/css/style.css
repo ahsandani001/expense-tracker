@@ -550,6 +550,42 @@ a { color: inherit; text-decoration: none; }
 .auth-switch a:hover { text-decoration: underline; }
 
 /* ------------------------------------------------------------------ */
+/* Auth Success Section (after navbar on home page)                   */
+/* ------------------------------------------------------------------ */
+
+.auth-success-section {
+    background: var(--paper-card);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.auth-success-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.auth-success-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.auth-success-title {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--ink);
+}
+
+.auth-success-body {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------------ */
 /* Footer                                                              */
 /* ------------------------------------------------------------------ */
 

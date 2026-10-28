@@ -114,7 +114,7 @@
 </div>
 
 <script>
-(function () {
+(function() {
     var modal = document.getElementById('video-modal');
     if (!modal) return;
 
@@ -136,32 +136,31 @@
         }
     }
 
-    openers.forEach(function (btn) {
-        btn.addEventListener('click', function (event) {
+    openers.forEach(function(btn) {
+        btn.addEventListener('click', function(event) {
             event.preventDefault();
             openModal();
         });
     });
 
-    closers.forEach(function (btn) {
+    closers.forEach(function(btn) {
         btn.addEventListener('click', closeModal);
     });
 
     // Clicking the overlay (outside the dialog) closes the modal
-    modal.addEventListener('click', function (event) {
+    modal.addEventListener('click', function(event) {
         if (event.target === modal) {
             closeModal();
         }
     });
 
     // Pressing Escape closes the modal
-    document.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape' && !modal.hidden) {
             closeModal();
         }
     });
 })();
 </script>
-`;
--%>
+`; %>
 <%- include('layouts/base', { title: 'Spendly — Track Every Rupee', body }) %>
