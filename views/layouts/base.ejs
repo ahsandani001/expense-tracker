@@ -18,11 +18,27 @@
                 <span class="brand-name">Spendly</span>
             </a>
             <div class="nav-links">
-                <a href="/login">Sign in</a>
-                <a href="/register" class="nav-cta">Get started</a>
+                <% if (isLoggedIn) { %>
+                    <a href="/logout" class="nav-logout">Logout</a>
+                <% } else { %>
+                    <a href="/login">Sign in</a>
+                    <a href="/register" class="nav-cta">Get started</a>
+                <% } %>
             </div>
         </div>
     </nav>
+
+    <% if (typeof loginSuccess !== 'undefined' && loginSuccess) { %>
+    <section class="auth-success-section">
+        <div class="auth-success-inner">
+            <div class="auth-success-message">
+                <div class="auth-success-icon">✓</div>
+                <h3 class="auth-success-title">Successfully logged in!</h3>
+                <p class="auth-success-body">Welcome back. You are now logged into your Spendly account.</p>
+            </div>
+        </div>
+    </section>
+    <% } %>
 
     <main class="main-content">
         <%- body %>

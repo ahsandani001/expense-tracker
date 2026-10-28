@@ -106,7 +106,7 @@ const postLogin = async (req, res) => {
     }
 
     req.session.userId = user.id;
-    return res.redirect('/');
+    return res.redirect('/?login=success');
   } catch (err) {
     return res.status(500).render('auth/login', {
       errors: ['Something went wrong. Please try again.'],

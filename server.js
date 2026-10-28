@@ -19,8 +19,16 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = Boolean(req.session && req.session.userId);
+  next();
+});
+
 app.use('/', authRouter);
-app.get('/', (req, res) => res.render('landing'));
+app.get('/', (req, res) => {
+  const loginSuccess = req.query.login === 'success';
+  res.render('landing', { loginSuccess });
+});
 app.get('/profile', (req, res) => res.send('Profile page — coming in Step 4'));
 app.get('/terms', (req, res) => res.render('policy/terms'));
 app.get('/privacy', (req, res) => res.render('policy/privacy'));
